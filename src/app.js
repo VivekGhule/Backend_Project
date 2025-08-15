@@ -1,6 +1,8 @@
 import express from 'express'
-import cors from 'cors'
-import cookieParser from 'cookie-parser'
+
+import cors from 'cors' //a middleware that controls which websites are allowed to call your server from a browser
+
+import cookieParser from 'cookie-parser' //a middleware that reads cookies sent by the browser and makes them easy to use in your code.
 
 const app = express()
 
