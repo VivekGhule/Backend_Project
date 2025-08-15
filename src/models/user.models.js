@@ -8,7 +8,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      lowercase: true,   // fixed
+      lowercase: true,   
       trim: true,
       index: true,
     },
@@ -16,7 +16,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      lowercase: true,   // fixed
+      lowercase: true,   
       trim: true,
     },
     fullName: {
@@ -32,7 +32,7 @@ const userSchema = new Schema(
     coverImage: {
       type: String, // cloudinary url
     },
-    watchHistory: [    // fixed key name
+    watchHistory: [    
       {
         type: Schema.Types.ObjectId,
         ref: 'Video',
@@ -49,14 +49,14 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-// Hash password if modified
+
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
-  this.password = await bcrypt.hash(this.password, 10); // fixed: await
+  this.password = await bcrypt.hash(this.password, 10); 
   return next();
 });
 
-// Instance methods
+
 userSchema.methods.isPasswordCorrect = async function (password) {
   return bcrypt.compare(password, this.password);
 };
@@ -70,7 +70,7 @@ userSchema.methods.generateAccessToken = function () {
       fullName: this.fullName,
     },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: process.env.ACCESS_TOKEN_EXPIRY } // e.g., '15m'
+    { expiresIn: process.env.ACCESS_TOKEN_EXPIRY } 
   );
 };
 
@@ -78,7 +78,7 @@ userSchema.methods.generateRefreshToken = function () {
   return jwt.sign(
     { _id: this._id.toString() },
     process.env.REFRESH_TOKEN_SECRET,
-    { expiresIn: process.env.REFRESH_TOKEN_EXPIRY } // e.g., '7d'
+    { expiresIn: process.env.REFRESH_TOKEN_EXPIRY } 
   );
 };
 
